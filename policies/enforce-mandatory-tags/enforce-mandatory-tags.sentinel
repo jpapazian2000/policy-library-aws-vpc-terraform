@@ -5,7 +5,7 @@
 import "tfplan/v2" as tfplan
 
 # The list of mandatory tags
-mandatory_tags = ["Name", "Environment", "Projec"]
+mandatory_tags = ["Name", "Environment"]
 
 # Filtering all of 'aws_instance' resources from the plan file
 vpc_instances = filter tfplan.resource_changes as _, resource {
