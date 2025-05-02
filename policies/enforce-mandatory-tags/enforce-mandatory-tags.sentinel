@@ -8,15 +8,15 @@ import "tfplan/v2" as tfplan
 mandatory_tags = ["Name", "Environment"]
 
 # Filtering all of 'aws_instance' resources from the plan file
-ec2_instances = filter tfplan.resource_changes as _, resource {
+vpc_instances = filter tfplan.resource_changes as _, resource {
 	resource.mode == "managed" and
-		resource.type == "aws_instance" and
+		resource.type == "aws_vpc" and
 		(resource.change.actions contains "create" or resource.change.actions == ["update"])
 }
 
 # Enforcing Mandatory Tags
 deny_resources_without_mandatory_tags = rule {
-	all ec2_instances as _, instances {
+	all vpc_instances as _, instances {
 		any instances.change.after.tags as key, value {
 			key in mandatory_tags
 		}
